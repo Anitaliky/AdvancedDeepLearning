@@ -114,5 +114,5 @@ dmypy.json
 .pyre/
 *.meta
 
-.data/
-.models/
+data/
+models/
