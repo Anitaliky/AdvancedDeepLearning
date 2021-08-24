@@ -4,12 +4,16 @@ from tqdm import tqdm
 
 import numpy as np
 import pandas as pd
+import random
 
 from PIL import ImageFilter  # , Image
 import cv2
 
 import torch
 import torchvision
+import torchvision.transforms.functional as TF
+
+from typing import List
 
 from .pytorch_utils.checkpoint import Checkpoint
 
@@ -17,6 +21,7 @@ from .pytorch_utils.checkpoint import Checkpoint
 # standard cifar10 stats
 cifar10_mean = (0.5, 0.5, 0.5)
 cifar10_std = (0.5, 0.5, 0.5)
+classDict = {'plane':0, 'car':1, 'bird':2, 'cat':3, 'deer':4, 'dog':5, 'frog':6, 'horse':7, 'ship':8, 'truck':9}
 
 
 class Config:
@@ -71,14 +76,8 @@ class Checkpoint(Checkpoint):
         return loss, results, pbar_postfix
 
     def agg_results(self, results):
-#         preds = np.concatenate(results['preds'])
-#         targets = np.concatenate(results['targets'])
-
         preds = results['preds']
         targets = results['targets']
-#         print(type(targets))
-#         print(len(targets))
-#         print(targets)
         targets = np.concatenate(tuple(targets))
         preds = np.concatenate(tuple([[t for t in y] for y in preds])).reshape(targets.shape)
 
@@ -86,3 +85,18 @@ class Checkpoint(Checkpoint):
         additional_metrics = {}
 
         return single_num_score, additional_metrics
+    
+    
+class RotateAngle:
+    """Rotate by one of the given angles."""
+
+    def __init__(self, angles: List[float], random: bool=True):
+        self.angles = angles
+        self.random = random
+
+    def __call__(self, x):
+        if self.random:
+            angle = random.choice(self.angles)
+        else:
+            angle = self.angles[0]
+        return TF.rotate(x, angle)
