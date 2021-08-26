@@ -16,9 +16,7 @@ class Model(nn.Module):
         for param in self.model.parameters():
             param.requires_grad = False
         
-        self.fc = nn.Sequential(nn.Linear(self.model.fc.out_features, self.model.fc.out_features, bias=True),
-                                nn.ReLU(),
-                                nn.Linear(self.model.fc.out_features, self.num_classes, bias=True))
+        self.model.fc =  nn.Linear(self.model.fc.in_features, self.num_classes, bias=True)
         
         for p in self.model.fc.parameters():
             p.requires_grad = True
@@ -26,5 +24,4 @@ class Model(nn.Module):
         
     def forward(self, x):
         x = self.model(x)
-        x = self.fc(x)
         return x

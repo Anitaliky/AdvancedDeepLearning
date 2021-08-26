@@ -22,9 +22,9 @@ cfg.save = True # save model checkpoints (best, last and epoch)
 cfg.tqdm_bar = True # using a tqdm bar for loading data and epoch progression, should be False if not using a jupyter notebook
 cfg.preload_data = True             # preloading data to memory
 cfg.prints = 'display' # should be 'display' if using a jupyter notebook, else 'print'
-cfg.load = 1
+cfg.load = -1
 cfg.max_iterations = None
-cfg.wd = 5e-4
+cfg.wd = 0 #5e-4
 
 
 ###########################################################################

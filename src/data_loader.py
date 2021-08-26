@@ -11,7 +11,7 @@ from . import utils
 
 def train_eval_loaders_cifar10(data_dir,
                                batch_size,
-                               angles,
+                               angles=None,
                                eval_size=0.2,
                                num_workers=4,
                                augment=False,
@@ -88,7 +88,7 @@ def train_eval_loaders_cifar10(data_dir,
 
 def test_loader(data_dir,
                 batch_size,
-                angles,
+                angles=None,
                 class_name=None,
                 augment=False,
                 num_workers=4,):
