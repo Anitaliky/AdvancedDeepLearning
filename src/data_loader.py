@@ -8,19 +8,23 @@ from torch.utils.data.sampler import SubsetRandomSampler
 from PIL import Image
 
 from . import utils
+from src.dataset import CIFAR10_Resnet50
+from config import cfg
 
 def train_eval_loaders_cifar10(data_dir,
                                batch_size,
+                               feature_extraction=False,
                                angles=None,
                                eval_size=0.2,
                                num_workers=4,
                                augment=False,
-                               class_name=None):
+                               class_name=None,
+                               random_rotation=False):
     normalize = transforms.Normalize(utils.cifar10_mean, utils.cifar10_std)
 
     if augment:
         transform = transforms.Compose([
-            utils.RotateAngle(angles=angles),
+            utils.RotateAngle(angles=angles, random=random_rotation),
             transforms.ToTensor(),
             normalize,
         ])
@@ -30,7 +34,7 @@ def train_eval_loaders_cifar10(data_dir,
             normalize,
         ])
 
-    if class_name:
+    if class_name: #TODO: fit to new dataset
         train_dataset = datasets.CIFAR10(
             root=data_dir, train=True,
             download=True,
@@ -56,15 +60,20 @@ def train_eval_loaders_cifar10(data_dir,
         )
         
     else:
-        train_dataset = datasets.CIFAR10(
-            root=data_dir, train=True,
-            download=True, transform=transform,
-        )
+        if feature_extraction:
+            train_dataset = CIFAR10_Resnet50(train=True)
 
-        eval_dataset = datasets.CIFAR10(
-            root=data_dir, train=True,
-            download=True, transform=transform,
-        )
+            eval_dataset = CIFAR10_Resnet50(train=True)
+        else:
+            train_dataset = datasets.CIFAR10(
+                root=data_dir, train=True,
+                download=True, transform=transform,
+            )
+
+            eval_dataset = datasets.CIFAR10(
+                root=data_dir, train=True,
+                download=True, transform=transform,
+            )
 
     data_size = len(train_dataset)
     indices = list(range(data_size))
@@ -88,16 +97,18 @@ def train_eval_loaders_cifar10(data_dir,
 
 def test_loader(data_dir,
                 batch_size,
+                feature_extraction=False,
                 angles=None,
                 class_name=None,
                 augment=False,
-                num_workers=4,):
+                num_workers=4,
+                random_rotation=False):
 
     normalize = transforms.Normalize(utils.cifar10_mean, utils.cifar10_std)
 
     if augment:
         transform = transforms.Compose([
-            utils.RotateAngle(angles=angles),
+            utils.RotateAngle(angles=angles, random=random_rotation),
             transforms.ToTensor(),
             normalize,
         ])
@@ -107,7 +118,7 @@ def test_loader(data_dir,
             normalize,
         ])
         
-    if class_name:
+    if class_name: #TODO: fit to new dataset
         dataset = datasets.CIFAR10(
             root=data_dir, train=False,
             download=True,
@@ -120,10 +131,13 @@ def test_loader(data_dir,
             transform
         )
     else:
-        dataset = datasets.CIFAR10(
-            root=data_dir, train=False,
-            download=True, transform=transform,
-        )
+        if feature_extraction and not augment:
+            dataset = CIFAR10_Resnet50(train=False)
+        else:
+            dataset = datasets.CIFAR10(
+                root=data_dir, train=False,
+                download=True, transform=transform,
+            )
 
     data_loader = torch.utils.data.DataLoader(
         dataset, batch_size=batch_size,
