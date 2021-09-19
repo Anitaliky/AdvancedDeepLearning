@@ -1,0 +1,125 @@
+start job
+Mon Sep 13 19:09:07 2021       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 460.91.03    Driver Version: 460.91.03    CUDA Version: 11.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  GeForce RTX 208...  Off  | 00000000:0C:00.0 Off |                  N/A |
+| 31%   33C    P8    14W / 250W |      0MiB / 11019MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+device cuda
+Loads rotation_resnet34_adam_lr0.0003_bs32
+Number of parameters 21289802 trainable 5130
+epoch   1/100 | train_loss 1.61312 | val_loss 1.64767 | train_score 0.45447 | val_score 0.44401 | train_time   0.89 min | best
+epoch   2/100 | train_loss 1.57716 | val_loss 1.61467 | train_score 0.46665 | val_score 0.45964 | train_time   0.89 min | best
+epoch   3/100 | train_loss 1.55011 | val_loss 1.59327 | train_score 0.47411 | val_score 0.46715 | train_time   0.89 min | best
+epoch   4/100 | train_loss 1.51604 | val_loss 1.56433 | train_score 0.49010 | val_score 0.47676 | train_time   0.90 min | best
+epoch   5/100 | train_loss 1.50946 | val_loss 1.54435 | train_score 0.48698 | val_score 0.48548 | train_time   0.90 min | best
+epoch   6/100 | train_loss 1.48180 | val_loss 1.52106 | train_score 0.50288 | val_score 0.48838 | train_time   0.91 min | best
+epoch   7/100 | train_loss 1.49554 | val_loss 1.52676 | train_score 0.49664 | val_score 0.48968 | train_time   0.91 min | best
+epoch   8/100 | train_loss 1.52064 | val_loss 1.56578 | train_score 0.49112 | val_score 0.48377 | train_time   0.92 min
+epoch   9/100 | train_loss 1.51199 | val_loss 1.56755 | train_score 0.48948 | val_score 0.48207 | train_time   0.93 min
+epoch  10/100 | train_loss 1.49962 | val_loss 1.54998 | train_score 0.49540 | val_score 0.48377 | train_time   0.93 min
+epoch  11/100 | train_loss 1.49490 | val_loss 1.54345 | train_score 0.49788 | val_score 0.48748 | train_time   0.94 min
+epoch  12/100 | train_loss 1.50873 | val_loss 1.55540 | train_score 0.49182 | val_score 0.48468 | train_time   0.94 min
+epoch  13/100 | train_loss 1.47865 | val_loss 1.52465 | train_score 0.49990 | val_score 0.48448 | train_time   0.95 min
+epoch  14/100 | train_loss 1.49548 | val_loss 1.54634 | train_score 0.49630 | val_score 0.48998 | train_time   0.96 min | best
+epoch  15/100 | train_loss 1.52605 | val_loss 1.57276 | train_score 0.49516 | val_score 0.47766 | train_time   0.96 min
+epoch  16/100 | train_loss 1.48811 | val_loss 1.53999 | train_score 0.49806 | val_score 0.48598 | train_time   0.97 min
+epoch  17/100 | train_loss 1.47781 | val_loss 1.52776 | train_score 0.49904 | val_score 0.48718 | train_time   0.97 min
+epoch  18/100 | train_loss 1.47554 | val_loss 1.52136 | train_score 0.49858 | val_score 0.48608 | train_time   0.98 min
+epoch  19/100 | train_loss 1.47198 | val_loss 1.52432 | train_score 0.49942 | val_score 0.48628 | train_time   0.99 min
+epoch  20/100 | train_loss 1.45788 | val_loss 1.50825 | train_score 0.50854 | val_score 0.49569 | train_time   0.99 min | best
+epoch  21/100 | train_loss 1.50140 | val_loss 1.55799 | train_score 0.49470 | val_score 0.47867 | train_time   1.00 min
+epoch  22/100 | train_loss 1.47729 | val_loss 1.52927 | train_score 0.50010 | val_score 0.48448 | train_time   1.01 min
+epoch  23/100 | train_loss 1.48503 | val_loss 1.53615 | train_score 0.49872 | val_score 0.48287 | train_time   1.01 min
+epoch  24/100 | train_loss 1.47405 | val_loss 1.52548 | train_score 0.49706 | val_score 0.48317 | train_time   1.01 min
+epoch  25/100 | train_loss 1.50047 | val_loss 1.55469 | train_score 0.49698 | val_score 0.48488 | train_time   1.02 min
+epoch  26/100 | train_loss 1.46867 | val_loss 1.51661 | train_score 0.50372 | val_score 0.49259 | train_time   1.02 min
+epoch  27/100 | train_loss 1.47164 | val_loss 1.52150 | train_score 0.50546 | val_score 0.48998 | train_time   1.03 min
+epoch  28/100 | train_loss 1.48701 | val_loss 1.54073 | train_score 0.50238 | val_score 0.48668 | train_time   1.04 min
+epoch  29/100 | train_loss 1.48504 | val_loss 1.53171 | train_score 0.49616 | val_score 0.48578 | train_time   1.04 min
+epoch  30/100 | train_loss 1.48473 | val_loss 1.52797 | train_score 0.49824 | val_score 0.48948 | train_time   1.05 min
+epoch  31/100 | train_loss 1.48693 | val_loss 1.53929 | train_score 0.49602 | val_score 0.48868 | train_time   1.05 min
+epoch  32/100 | train_loss 1.50053 | val_loss 1.55739 | train_score 0.49448 | val_score 0.48277 | train_time   1.06 min
+epoch  33/100 | train_loss 1.47842 | val_loss 1.53221 | train_score 0.50086 | val_score 0.48838 | train_time   1.06 min
+epoch  34/100 | train_loss 1.45234 | val_loss 1.50711 | train_score 0.50852 | val_score 0.49639 | train_time   1.07 min | best
+epoch  35/100 | train_loss 1.46338 | val_loss 1.51468 | train_score 0.50562 | val_score 0.49139 | train_time   1.08 min
+epoch  36/100 | train_loss 1.50576 | val_loss 1.55887 | train_score 0.49438 | val_score 0.48778 | train_time   1.09 min
+epoch  37/100 | train_loss 1.47635 | val_loss 1.52303 | train_score 0.50470 | val_score 0.49369 | train_time   1.09 min
+epoch  38/100 | train_loss 1.48670 | val_loss 1.53963 | train_score 0.50104 | val_score 0.48938 | train_time   1.10 min
+epoch  39/100 | train_loss 1.47235 | val_loss 1.51896 | train_score 0.50400 | val_score 0.49589 | train_time   1.10 min
+epoch  40/100 | train_loss 1.47773 | val_loss 1.53301 | train_score 0.49756 | val_score 0.49099 | train_time   1.11 min
+epoch  41/100 | train_loss 1.47597 | val_loss 1.53039 | train_score 0.50032 | val_score 0.49028 | train_time   1.11 min
+epoch  42/100 | train_loss 1.46239 | val_loss 1.50966 | train_score 0.50476 | val_score 0.49629 | train_time   1.12 min
+epoch  43/100 | train_loss 1.48094 | val_loss 1.53640 | train_score 0.49650 | val_score 0.48558 | train_time   1.16 min
+epoch  44/100 | train_loss 1.49567 | val_loss 1.55098 | train_score 0.49554 | val_score 0.47766 | train_time   1.17 min
+epoch  45/100 | train_loss 1.46911 | val_loss 1.51890 | train_score 0.50068 | val_score 0.49028 | train_time   1.18 min
+epoch  46/100 | train_loss 1.49130 | val_loss 1.55039 | train_score 0.49866 | val_score 0.48267 | train_time   1.18 min
+epoch  47/100 | train_loss 1.48727 | val_loss 1.53752 | train_score 0.50102 | val_score 0.49149 | train_time   1.17 min
+epoch  48/100 | train_loss 1.47182 | val_loss 1.52009 | train_score 0.50156 | val_score 0.49289 | train_time   1.18 min
+epoch  49/100 | train_loss 1.49425 | val_loss 1.54909 | train_score 0.49654 | val_score 0.48407 | train_time   1.19 min
+epoch  50/100 | train_loss 1.45858 | val_loss 1.51293 | train_score 0.50772 | val_score 0.49219 | train_time   1.19 min
+epoch  51/100 | train_loss 1.46998 | val_loss 1.51309 | train_score 0.50228 | val_score 0.49469 | train_time   1.19 min
+epoch  52/100 | train_loss 1.47557 | val_loss 1.52623 | train_score 0.50776 | val_score 0.49129 | train_time   1.20 min
+epoch  53/100 | train_loss 1.48181 | val_loss 1.53701 | train_score 0.49976 | val_score 0.48698 | train_time   1.21 min
+epoch  54/100 | train_loss 1.49116 | val_loss 1.54919 | train_score 0.50022 | val_score 0.48498 | train_time   1.22 min
+epoch  55/100 | train_loss 1.48550 | val_loss 1.53854 | train_score 0.49926 | val_score 0.48668 | train_time   1.22 min
+epoch  56/100 | train_loss 1.48909 | val_loss 1.54387 | train_score 0.49584 | val_score 0.48377 | train_time   1.23 min
+epoch  57/100 | train_loss 1.49576 | val_loss 1.55069 | train_score 0.49586 | val_score 0.47696 | train_time   1.24 min
+epoch  58/100 | train_loss 1.49305 | val_loss 1.53786 | train_score 0.50104 | val_score 0.48738 | train_time   1.24 min
+epoch  59/100 | train_loss 1.47785 | val_loss 1.53328 | train_score 0.49976 | val_score 0.48978 | train_time   1.25 min
+epoch  60/100 | train_loss 1.48958 | val_loss 1.55019 | train_score 0.49952 | val_score 0.48558 | train_time   1.26 min
+epoch  61/100 | train_loss 1.47724 | val_loss 1.52528 | train_score 0.50408 | val_score 0.49169 | train_time   1.27 min
+epoch  62/100 | train_loss 1.47510 | val_loss 1.52826 | train_score 0.50050 | val_score 0.48958 | train_time   1.27 min
+epoch  63/100 | train_loss 1.49555 | val_loss 1.55596 | train_score 0.50146 | val_score 0.48978 | train_time   1.28 min
+epoch  64/100 | train_loss 1.48975 | val_loss 1.54489 | train_score 0.49888 | val_score 0.49229 | train_time   1.28 min
+epoch  65/100 | train_loss 1.46960 | val_loss 1.52339 | train_score 0.50768 | val_score 0.49058 | train_time   1.29 min
+epoch  66/100 | train_loss 1.46991 | val_loss 1.51542 | train_score 0.50158 | val_score 0.48958 | train_time   1.29 min
+epoch  67/100 | train_loss 1.48815 | val_loss 1.53570 | train_score 0.49324 | val_score 0.48798 | train_time   1.30 min
+epoch  68/100 | train_loss 1.47945 | val_loss 1.53896 | train_score 0.49894 | val_score 0.48588 | train_time   1.31 min
+epoch  69/100 | train_loss 1.52889 | val_loss 1.58158 | train_score 0.49394 | val_score 0.48017 | train_time   1.31 min
+epoch  70/100 | train_loss 1.48237 | val_loss 1.54194 | train_score 0.50078 | val_score 0.48818 | train_time   1.32 min
+epoch  71/100 | train_loss 1.48393 | val_loss 1.53687 | train_score 0.50028 | val_score 0.48878 | train_time   1.33 min
+epoch  72/100 | train_loss 1.48571 | val_loss 1.54494 | train_score 0.50102 | val_score 0.48558 | train_time   1.34 min
+epoch  73/100 | train_loss 1.48998 | val_loss 1.54871 | train_score 0.50060 | val_score 0.49089 | train_time   1.34 min
+epoch  74/100 | train_loss 1.47404 | val_loss 1.52164 | train_score 0.50196 | val_score 0.48948 | train_time   1.35 min
+epoch  75/100 | train_loss 1.50368 | val_loss 1.55974 | train_score 0.49482 | val_score 0.48387 | train_time   1.35 min
+epoch  76/100 | train_loss 1.46890 | val_loss 1.51994 | train_score 0.49980 | val_score 0.48297 | train_time   1.36 min
+epoch  77/100 | train_loss 1.48398 | val_loss 1.53163 | train_score 0.50042 | val_score 0.49449 | train_time   1.37 min
+epoch  78/100 | train_loss 1.45765 | val_loss 1.51143 | train_score 0.50752 | val_score 0.49119 | train_time   1.37 min
+epoch  79/100 | train_loss 1.47628 | val_loss 1.52517 | train_score 0.50312 | val_score 0.49038 | train_time   1.38 min
+epoch  80/100 | train_loss 1.49870 | val_loss 1.55535 | train_score 0.49732 | val_score 0.48297 | train_time   1.39 min
+epoch  81/100 | train_loss 1.46747 | val_loss 1.51427 | train_score 0.50506 | val_score 0.49159 | train_time   1.39 min
+epoch  82/100 | train_loss 1.48673 | val_loss 1.53590 | train_score 0.49986 | val_score 0.49018 | train_time   1.40 min
+epoch  83/100 | train_loss 1.50200 | val_loss 1.55591 | train_score 0.50088 | val_score 0.48688 | train_time   1.41 min
+epoch  84/100 | train_loss 1.47453 | val_loss 1.53228 | train_score 0.50192 | val_score 0.48768 | train_time   1.42 min
+epoch  85/100 | train_loss 1.49863 | val_loss 1.55613 | train_score 0.50104 | val_score 0.48668 | train_time   1.42 min
+epoch  86/100 | train_loss 1.47960 | val_loss 1.52994 | train_score 0.50356 | val_score 0.49229 | train_time   1.43 min
+epoch  87/100 | train_loss 1.48897 | val_loss 1.54594 | train_score 0.49958 | val_score 0.48387 | train_time   1.43 min
+epoch  88/100 | train_loss 1.47912 | val_loss 1.53489 | train_score 0.50312 | val_score 0.49048 | train_time   1.44 min
+epoch  89/100 | train_loss 1.48775 | val_loss 1.54531 | train_score 0.50104 | val_score 0.48558 | train_time   1.45 min
+epoch  90/100 | train_loss 1.46356 | val_loss 1.51217 | train_score 0.50458 | val_score 0.48888 | train_time   1.45 min
+epoch  91/100 | train_loss 1.48751 | val_loss 1.54726 | train_score 0.49920 | val_score 0.48207 | train_time   1.46 min
+epoch  92/100 | train_loss 1.47970 | val_loss 1.53818 | train_score 0.50088 | val_score 0.48888 | train_time   1.47 min
+epoch  93/100 | train_loss 1.47774 | val_loss 1.52489 | train_score 0.49974 | val_score 0.48988 | train_time   1.47 min
+epoch  94/100 | train_loss 1.49731 | val_loss 1.55048 | train_score 0.49114 | val_score 0.48057 | train_time   1.48 min
+epoch  95/100 | train_loss 1.48355 | val_loss 1.54280 | train_score 0.50306 | val_score 0.48968 | train_time   1.49 min
+epoch  96/100 | train_loss 1.49637 | val_loss 1.55012 | train_score 0.50108 | val_score 0.48958 | train_time   1.49 min
+epoch  97/100 | train_loss 1.46169 | val_loss 1.51038 | train_score 0.50486 | val_score 0.48958 | train_time   1.50 min
+epoch  98/100 | train_loss 1.48192 | val_loss 1.52587 | train_score 0.50140 | val_score 0.49189 | train_time   1.50 min
+epoch  99/100 | train_loss 1.48296 | val_loss 1.52976 | train_score 0.50192 | val_score 0.49008 | train_time   1.51 min
+epoch 100/100 | train_loss 1.48413 | val_loss 1.53226 | train_score 0.50018 | val_score 0.48377 | train_time   1.52 min
+done

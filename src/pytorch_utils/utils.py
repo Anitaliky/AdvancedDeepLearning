@@ -15,6 +15,7 @@ def naming_scheme(version: str,
                   epoch: Union[int, str],
                   epoch_fmt: Optional[str]="{:03}") -> str:
     """a  func for converting a comb of version, epoch to a filename str with a fixed naming_scheme
+
     Parameters
     ----------
     version : str (or str like)
@@ -23,6 +24,7 @@ def naming_scheme(version: str,
         the save type: -1 for last model, an int for a specific epoch, 'best' for best epoch
     epoch_fmt : str
         str format for epoch (default is "{:03}")
+
     Returns
     -------
     str
@@ -41,6 +43,7 @@ def load_model(device: torch.device,
                log: bool=False,
                explicit_file: Optional[str]=None):
     """a func for loading a Checkpoint using a comb of version, epoch usind the dill module
+
     Parameters
     ----------
     version : convertable to str, optional if is given explicit_file
@@ -56,6 +59,7 @@ def load_model(device: torch.device,
     explicit_file : str, optional
         an explicit path to a Checkpoint file (default is None),
         if explicit_file is not None, ignores other args and loads explicit_file 
+
     Returns
     -------
     Checkpoint
@@ -74,6 +78,7 @@ def load_model(device: torch.device,
             model_path = os.path.join(models_dir, str(version), naming_scheme(version, epoch) + '.pth')
         else:
             if version is not None or models_dir is not None:
+                import warnings
                 warnings.warn(f'\n\nexplicit_file={explicit_file} was specified\nignoring version={version}, models_dir={models_dir}\n')
             model_path = explicit_file
         checkpoint = torch.load(model_path, map_location=device, pickle_module=dill)
@@ -87,6 +92,7 @@ def set_p_dropout(model: nn.Module,
                   i: int=0):
     """
     set p of all nn.Dropout modules in model to p, recursively
+
     Parameters
     ----------
     model : nn.Module
@@ -118,6 +124,7 @@ def set_temp_seed(seed: int):
     """
     a context manager which temporarily sets a fixed random seed for torch.random,
     then returns random number generator back to the previous state.
+
     Parameters
     ----------
     seed : int
@@ -129,3 +136,4 @@ def set_temp_seed(seed: int):
         yield
     finally:
         torch.random.set_rng_state(prev_state)
+

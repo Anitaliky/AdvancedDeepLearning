@@ -11,17 +11,17 @@ import cv2
 
 import torch
 import torchvision
-import torchvision.transforms.functional as TF
+import torchvision.transforms.functional as F
 
 from typing import List
 
 from .pytorch_utils.checkpoint import Checkpoint
 
 
-# standard cifar10 stats
-cifar10_mean = (0.5, 0.5, 0.5)
-cifar10_std = (0.5, 0.5, 0.5)
-classDict = {'plane':0, 'car':1, 'bird':2, 'cat':3, 'deer':4, 'dog':5, 'frog':6, 'horse':7, 'ship':8, 'truck':9}
+# cifar10 stats
+cifar10_mean = torch.tensor([0.4914, 0.4822, 0.4465])
+cifar10_std = torch.tensor([0.2470, 0.2435, 0.2616])
+
 
 
 class Config:
@@ -34,69 +34,60 @@ class Config:
 
     def __str__(self):
         return self.__repr__()
-    
-    
+
+
 def accuracy_score(preds, targets):
     return float((preds == targets).astype(float).mean())
-    
 
-class Checkpoint(Checkpoint):
+
+class MyCheckpoint(Checkpoint):
     def batch_pass(self,
                    device,
                    batch,
                    *args, **kwargs):
-        results = {}
+        X = [b.to(device) for b in batch[:-1]]
+        y = batch[-1].to(device)
         
-        imgs, targets = batch
-        imgs, targets = imgs.to(device), targets.to(device)
-        self.batch_size = imgs.size(0)
+        self.batch_size = y.shape[0]
 
-        out = self.model(imgs)
-        preds = torch.argmax(out, dim=1)
-        
-        loss = self.criterion(out, targets)
-        
-        out = out.detach().cpu().numpy(),
-        preds = preds.detach().cpu().numpy(),
-        targets = targets.detach().cpu().numpy(),
+        out = self.model(*X)
+        loss = self.criterion(out, y)
 
         results = {
-            'out': out,
-            'preds': preds,
-            'targets': targets
-        }
-        preds = preds[0]
-        targest = targets[0]
-    
+            'preds': out.detach().cpu().argmax(dim=1).numpy(),
+            'trues': y.detach().cpu().clone().numpy()
+            }
+
         pbar_postfix = {
             'loss': float(loss.data),
-            'score': self.score(preds, targets)
+            'score': self.score(results['preds'], results['trues']),
         }
 
         return loss, results, pbar_postfix
 
     def agg_results(self, results):
-        preds = results['preds']
-        targets = results['targets']
-        targets = np.concatenate(tuple(targets))
-        preds = np.concatenate(tuple([[t for t in y] for y in preds])).reshape(targets.shape)
+        preds = np.concatenate(results['preds'])
+        trues = np.concatenate(results['trues'])
 
-        single_num_score = self.score(preds, targets)
+        single_num_score = self.score(trues, preds)
         additional_metrics = {}
 
         return single_num_score, additional_metrics
-    
-    
+
+
 class RotateAngle:
     """Rotate by one of the given angles."""
 
-    def __init__(self, angles: List[float], random: bool=True):
+    def __init__(self, angles: List[float]=(0., ), **kwargs):
         self.angles = angles
-        self.random = random
+        self.kwargs = kwargs
 
-    def __call__(self, x):
-        if self.random:
-            angle = random.choice(self.angles)
-        else:
-            angle = self.angles[0]
-        return TF.rotate(x, angle)
+    def __call__(self, img):
+        angle = random.choice(self.angles)
+        return F.rotate(img=img, angle=angle, **self.kwargs)
+    
+    def __repr__(self):
+        return f'RotateAngle(angles={self.angles}, {self.kwargs})'
+
+
+

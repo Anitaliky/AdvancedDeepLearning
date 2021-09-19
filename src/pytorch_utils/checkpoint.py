@@ -1,3 +1,8 @@
+"""
+
+"""
+
+
 import os
 import time
 from typing import Union, Optional, Callable, Any, Dict, List, Tuple
@@ -17,6 +22,7 @@ class Checkpoint:
     a wrapper class that manages all interactions with an nn.Module instance,
     including training, saving, evaluating, stats logging,
     setting training hyperparameters, plotting training stats, monitoring training
+
     Attributes
     -------
     version : convertable to str
@@ -49,8 +55,8 @@ class Checkpoint:
                  version: str,
                  model: nn.Module,
                  optimizer: torch.optim.Optimizer,
-                 criterion: torch.nn.modules.loss._Loss,
-                 score: Callable[[np.ndarray, np.ndarray], float],
+                 criterion: torch.nn.modules.loss._Loss=None,
+                 score: Callable[[np.ndarray, np.ndarray], float]=None,
                  lr_scheduler: Optional[torch.optim.lr_scheduler._LRScheduler]=None,
                  models_dir: str='models',
                  seed: int=None,
@@ -85,6 +91,7 @@ class Checkpoint:
             the naming_scheme of the class instance (default is naming_scheme)
         save : bool, optional
             if save=True, saves the class instance (default is False)
+
         Examples
         --------
         >>> model = nn.Sequential(nn.Linear(10, 1), nn.Sigmoid())
@@ -182,12 +189,14 @@ class Checkpoint:
                 epoch: Union[int, str]=-1) -> Any:
         """
         extracts stats from self.log
+
         Parameters
         -------
         col : str, optional
             path to be used for versions dirs (default is 'epoch')
         epoch : int or str, optional
             the epoch to load, can be int > 0 or -1 or 'best'  (default is -1)
+
         Returns
         -------
         str or int or float or None
@@ -223,12 +232,17 @@ class Checkpoint:
     def _get_optimizer_params(self) -> dict:
         return dict(sorted(list({key: val for key, val in self.optimizer.param_groups[0].items() if key != 'params'}.items()), key=lambda x: x[0]))
 
+    @staticmethod
+    def version_dir(self):
+        return os.path.join(self.models_dir, self.version)
+    
     def save(self,
              best: bool=False,
              epoch: bool=False,
              log: bool=False,
              explicit_file: Optional[str]=None) -> None:
         """ saves the class instance using self.naming_scheme
+
         Parameters
         -------
         best : bool, optional
@@ -242,23 +256,23 @@ class Checkpoint:
         explicit_file : str, optional
             if explicit_file is not None, saves the model to an explicitly specified explicit_file name (default is None)
         """
-        import dill
+#         import dill
 
         if explicit_file is not None:
-            torch.save(self, explicit_file, pickle_module=dill)
+            torch.save(self, explicit_file)  # , pickle_module=dill
             return
 
-        self.version_dir = os.path.join(self.models_dir, self.version)
+#         self.version_dir = os.path.join(self.models_dir, self.version)
         if not os.path.exists(self.models_dir):
             os.mkdir(self.models_dir)
         if not os.path.exists(self.version_dir):
             os.mkdir(self.version_dir)
 
-        torch.save(self, os.path.join(self.version_dir, self.naming_scheme(self.version, -1)) + '.pth', pickle_module=dill)
+        torch.save(self, os.path.join(self.version_dir, self.naming_scheme(self.version, -1)) + '.pth')  # , pickle_module=dill
         if best:
-            torch.save(self, os.path.join(self.version_dir, self.naming_scheme(self.version, 'best')) + '.pth', pickle_module=dill)
+            torch.save(self, os.path.join(self.version_dir, self.naming_scheme(self.version, 'best')) + '.pth')  # , pickle_module=dill
         if epoch:
-            torch.save(self, os.path.join(self.version_dir, self.naming_scheme(self.version, self.epoch)) + '.pth', pickle_module=dill)
+            torch.save(self, os.path.join(self.version_dir, self.naming_scheme(self.version, self.epoch)) + '.pth')  # , pickle_module=dill
         if log:
             self.log.to_csv(os.path.join(self.version_dir, self.naming_scheme(self.version, -1) + '_log.csv'))
             self.train_loss_log.to_csv(os.path.join(self.version_dir, self.naming_scheme(self.version, -1) + '_train_loss_log.csv'))
@@ -329,6 +343,7 @@ class Checkpoint:
             1. calculating total batch loss for optimizer step
             2. calculating batch results needed for scoring (or other) metrics
             3. (optional) performing batch transformations outside of the model, for example: max, argmax, etc.
+
         Parameters
         ----------
         device : torch device or str
@@ -339,6 +354,7 @@ class Checkpoint:
             can be passed through *args, **kwargs to self.train
         kwargs : optional
             can be passed through *args, **kwargs to self.train
+
         Returns
         -------
         torch.Tensor
@@ -373,12 +389,14 @@ class Checkpoint:
             1. aggregating results of the epoch, from each _batch_pass (or batch_pass)
             2. returning a single_num_score
             3. returning additional stats which will be logged to self.log
+
         Parameters
         ----------
         results : dict
             a dict of
                 key: keys from _batch_pass (or batch_pass)
                 val: a list of values from _batch_pass (or batch_pass), each list entry reffers to a batch
+
         Returns
         -------
         single_num_score
@@ -475,6 +493,7 @@ class Checkpoint:
               *args, **kwargs) -> None:
         """
         performs a training session
+
         Parameters
         ----------
         train_loader : torch.utils.data.DataLoader
@@ -552,13 +571,14 @@ class Checkpoint:
             with torch.no_grad():
                 self.model.train(False)
                 if epochs_evaluate_train is not None and self.epoch % epochs_evaluate_train == 0:
-                    train_loss, train_score, train_results = self.run(device, train_eval_loader, tqdm_bar=tqdm_bar, max_iterations=max_iterations_val, *args, **kwargs)
+                    train_eval_loss, train_score, train_results = self.run(device, train_eval_loader, tqdm_bar=tqdm_bar, max_iterations=max_iterations_val, *args, **kwargs)
+                    train_loss = train_loss if np.isnan(train_eval_loss) else train_eval_loss
                     
                 self.train_data = False
                 if val_loader is not None and epochs_evaluate_validation is not None and self.epoch % epochs_evaluate_validation == 0:
                     val_loss, val_score, val_results = self.run(device, val_loader, tqdm_bar=tqdm_bar, max_iterations=max_iterations_val, *args, **kwargs)
                 else:
-                    val_loss, val_score, val_results = None, None, {}
+                    val_loss, val_score, val_results = float("nan"), float("nan"), {}
 
             # update self.log
             train_time = (time.time() - tic)/60
@@ -621,6 +641,7 @@ class Checkpoint:
             Example : torch.utils.data.DataLoader(dataset=dataset, batch_size=32, shuffle=False)
         tqdm_bar : bool, optional
             if tqdm_bar=True, shows a tqdm progress bar over loader
+
         Returns
         -------
             dict
@@ -658,6 +679,7 @@ class Checkpoint:
                 *args, **kwargs) -> Tuple[float, float, dict]:
         """
         returns a concatenation of raw batch_results, can be used for getting raw model predictions if implemented in batch_pass
+
         Parameters
         ----------
         device : str or torch.device
@@ -668,6 +690,7 @@ class Checkpoint:
             Example : torch.utils.data.DataLoader(dataset=dataset, batch_size=32, shuffle=False)
         tqdm_bar : bool, optional
             if tqdm_bar=True, shows a tqdm progress bar over loader
+
         Returns
         -------
             float
@@ -698,3 +721,5 @@ class Checkpoint:
         self.plot_checkpoint(['batch_size'], 'batch_size', 'batch_size', scale='log', base=2, save=False)
         self.plot_checkpoint(['lr'], 'lr', 'lr', scale='log', base=10, save=False)
         display(self.log)
+
+
