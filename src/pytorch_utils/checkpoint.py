@@ -232,7 +232,7 @@ class Checkpoint:
     def _get_optimizer_params(self) -> dict:
         return dict(sorted(list({key: val for key, val in self.optimizer.param_groups[0].items() if key != 'params'}.items()), key=lambda x: x[0]))
 
-    @staticmethod
+    @property
     def version_dir(self):
         return os.path.join(self.models_dir, self.version)
     
